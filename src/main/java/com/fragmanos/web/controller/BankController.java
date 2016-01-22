@@ -7,6 +7,7 @@ import com.fragmanos.database.dao.YearStatDao;
 import com.fragmanos.database.model.BankTransaction;
 import com.fragmanos.database.model.MonthStat;
 import com.fragmanos.directory.DirectoryReader;
+import com.fragmanos.transformer.DateTransformer;
 import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -65,6 +66,18 @@ public class BankController {
             log.error("IO exception while parsing directory", e);
         }
         return bankTransactionsFromDirectory;
+    }
+
+    @RequestMapping("/api/bank/calendarTransactions")
+    public List<CalendarTransaction> fillCalendar() {
+        DateTransformer dateTransformer = new DateTransformer();
+        List<CalendarTransaction> calendarList = new ArrayList<CalendarTransaction>();
+        List<BankTransaction> allBankTransactions = bankTransactionDao.findAllByOrderByTransactiondateDesc();
+        for (BankTransaction transaction : allBankTransactions) {
+            calendarList.add(new CalendarTransaction(dateTransformer.toCalendarForm(transaction.getTransactiondate()),
+                    transaction.getDescription() + " " + String.valueOf(transaction.getCost())));
+        }
+        return calendarList;
     }
 
     @RequestMapping("/api/bank/allTransactions")
@@ -170,4 +183,21 @@ public class BankController {
         }
     }
 
+    private class CalendarTransaction {
+        String start;
+        String title;
+
+        public CalendarTransaction(String start, String title) {
+            this.start = start;
+            this.title = title;
+        }
+
+        public String getStart() {
+            return start;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+    }
 }

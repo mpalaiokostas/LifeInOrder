@@ -11,8 +11,8 @@
     <link href="webjars/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="webjars/angular-ui-grid/3.0.6/ui-grid.min.css" rel="stylesheet"/>
-    <link href="webjars/angular-chart.js/0.8.4/dist/angular-chart.min.css" rel="stylesheet"/>
     <link href="styles/starter.css" rel="stylesheet">
+    <link href="webjars/fullcalendar/2.4.0/fullcalendar.min.css" rel="stylesheet">
 
 
     <link rel="shortcut icon" type="image/ico" href="icons/favicon.ico"/>
@@ -30,8 +30,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="#/Home">Home</a></li>
                 <li class="dropdown open">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="true">Bank Data <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false"
+                       aria-expanded="false">Bank Data<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#/Transactions">Transactions</a></li>
                         <li role="separator" class="divider"></li>
@@ -53,6 +53,7 @@
 
 </body>
 <script src="webjars/jquery/2.1.3/jquery.min.js" rel="script"></script>
+<script src="webjars/momentjs/2.5.0/min/moment.min.js" rel="script"></script>
 <script src="webjars/angularjs/1.3.8/angular.js" rel="script"></script>
 <script src="webjars/angularjs/1.3.8/angular-touch.min.js" rel="script"></script>
 <script src="webjars/angularjs/1.3.8/angular-animate.min.js" rel="script"></script>
@@ -61,17 +62,20 @@
 <script src="webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="webjars/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 <script src="webjars/angular-ui-grid/3.0.6/ui-grid.js" rel="script"></script>
-<script src="webjars/Chart.js/1.0.2/Chart.js" rel="script"></script>
-<script src="webjars/angular-chart.js/0.8.4/dist/angular-chart.min.js" rel="script"></script>
+<script src="webjars/angular-ui-calendar/1.0.1/src/calendar.js" rel="script"></script>
+<script src="webjars/fullcalendar/2.4.0/fullcalendar.min.js" rel="script"></script>
 
 <script src="scripts/annyang.min.js"></script>
 
 <script src="scripts/app.js" rel="2script"></script>
 <script src="scripts/config/route.js" rel="2script"></script>
 
+<script src="scripts/services/transactionService.js" rel="2script"></script>
+
 <script src="scripts/controllers/mainCtrl.js" rel="2script"></script>
 <script src="scripts/controllers/transactions.js" rel="2script"></script>
 <script src="scripts/controllers/statistics.js" rel="2script"></script>
 <script src="scripts/controllers/voice.js"></script>
 <script src="scripts/controllers/statistics.js"></script>
+<script src="scripts/controllers/myCalendar.js" rel="script"></script>
 </html>

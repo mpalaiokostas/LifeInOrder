@@ -1,15 +1,10 @@
 'use strict';
 
-app.controller('transactions', function ($scope, $http, uiGridConstants) {
+app.controller('transactions', function ($scope, $resource, $http, uiGridConstants) {
 
-  $scope.bankTransactions = function () {
-    $http.get("/api/bank/allTransactions").then(function successCallback(response) {
-      $scope.gridOptions.data = response.data;
-    }, function errorCallback(response) {
-      $scope.gridOptions.data = null;
-    });
-  };
-  $scope.bankTransactions();
+  $resource("/api/bank/allTransactions").query(function(response) {
+    $scope.gridOptions.data = response;
+  });
 
 // ***************************************************************************************************************************** //
 
