@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('myCalendar', function ($scope, $resource, $http, $compile, $timeout, uiCalendarConfig, transactionService) {
+app.controller('myCalendar', function ($scope, $resource, $http, $compile, $timeout, uiCalendarConfig) {
 
     var date = new Date();
     var d = date.getDate();
