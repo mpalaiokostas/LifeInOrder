@@ -5,8 +5,8 @@ app.controller('VoiceCtrl', ['$scope', function ($scope) {
     $scope.hiddenDiv = false;
 
 
-    var home = function () {
-        window.location.replace('#/Home');
+    var calendar = function () {
+        window.location.replace('#/Calendar');
     };
     var statistics = function () {
         window.location.replace('#/Statistics');
@@ -34,7 +34,7 @@ app.controller('VoiceCtrl', ['$scope', function ($scope) {
     };
 
     $scope.commands = {
-        'home': home,
+        'calendar': calendar,
         'statistics': statistics,
         'transactions': transactions,
         'microphone': micro,

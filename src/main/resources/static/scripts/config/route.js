@@ -3,10 +3,10 @@
 app.config(function ($routeProvider) {
     $routeProvider.
         when('/',{
-            templateUrl: 'views/home.html',
+            templateUrl: 'views/calendar.html',
             controller: 'myCalendar'
-        }).when('/Home', {
-            templateUrl: 'views/home.html',
+        }).when('/Calendar', {
+            templateUrl: 'views/calendar.html',
             controller: 'myCalendar'
         }).when('/Transactions', {
             templateUrl: 'views/transactions.html',
@@ -18,6 +18,6 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/microphone.html',
             controller: 'VoiceCtrl'
         }).otherwise({
-            templateUrl: 'views/home.html'
+            templateUrl: 'views/calendar.html'
         });
 });
