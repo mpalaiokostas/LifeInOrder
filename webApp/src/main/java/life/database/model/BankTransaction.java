@@ -4,6 +4,8 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fragkakise on 11/09/2015.
@@ -25,6 +27,9 @@ public class BankTransaction implements Serializable {
 
   @Column(name = "COST", nullable = false)
   private Double cost;
+
+  @Column(name = "TAGS", nullable = false)
+  private List<BankTransactionTag> tags;
 
   public LocalDate getTransactiondate() {
     return transactiondate;
@@ -53,10 +58,18 @@ public class BankTransaction implements Serializable {
   public BankTransaction() {
   }
 
+  public BankTransaction(LocalDate transactiondate, String description, double cost, List<BankTransactionTag> bankTransactionTags) {
+    this.transactiondate = transactiondate;
+    this.description = description;
+    this.cost = cost;
+    this.tags = bankTransactionTags;
+  }
+
   public BankTransaction(LocalDate transactiondate, String description, Double cost) {
     this.transactiondate = transactiondate;
     this.description = description;
     this.cost = cost;
+    this.tags = new ArrayList<>();
   }
 
   @Override
@@ -93,5 +106,17 @@ public class BankTransaction implements Serializable {
              ", description= '" + description + '\'' +
              ", cost= " + cost +
              '}';
+  }
+
+  public boolean hasTags() {
+    return (tags.size() > 0);
+  }
+
+  public List<BankTransactionTag> getTags() {
+    return tags;
+  }
+
+  public void setTag(BankTransactionTag tag) {
+    this.tags.add(tag);
   }
 }
