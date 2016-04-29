@@ -7,19 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author fragkakise on 11/09/2015.
- */
 @Entity
-@Table(name = "BANKTRANSACTION")
+@Table(name = "BANK_TRANSACTION")
 public class BankTransaction implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID")
-  private Long id;
+  @Column(name = "BANK_TRANSACTION_ID")
+  private Long bank_transaction_id;
 
-  @Column(name = "TRANSACTIONDATE", nullable = false)
+  @Column(name = "TRANSACTION_DATE", nullable = false)
   private LocalDate transactiondate;
 
   @Column(name = "DESCRIPTION", nullable = false)
@@ -28,7 +25,9 @@ public class BankTransaction implements Serializable {
   @Column(name = "COST", nullable = false)
   private Double cost;
 
-  @Column(name = "TAGS", nullable = false)
+//  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+  @OneToMany //(mappedBy = "banktransaction")
+//  @JoinColumn(name = "BANK_TRANSACTION_TAG_ID", nullable = false)
   private List<BankTransactionTag> tags;
 
   public LocalDate getTransactiondate() {

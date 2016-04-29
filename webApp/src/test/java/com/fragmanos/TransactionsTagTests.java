@@ -5,15 +5,13 @@ import java.util.List;
 
 import life.database.model.BankTransaction;
 import life.database.model.BankTransactionTag;
+import life.database.model.BankTransactionTagKeywords;
 import org.joda.time.LocalDate;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-/**
- * @author fragkakise on 12/04/2016.
- */
 public class TransactionsTagTests {
 
   BankTransaction bankTransactionWithTags;
@@ -53,11 +51,11 @@ public class TransactionsTagTests {
 
   @Test
   public void testTagHasKeywords() throws Exception {
-    foodTag.setKeywords("Saintsburry");
-    foodTag.setKeywords("Tesco");
-    foodTag.setKeywords("CoOperative");
+    foodTag.setKeywords(new BankTransactionTagKeywords("Saintsburry"));
+    foodTag.setKeywords(new BankTransactionTagKeywords("Tesco"));
+    foodTag.setKeywords(new BankTransactionTagKeywords("CoOperative"));
     assertTrue(foodTag.hasKeywords());
-    assertEquals("Saintsburry", foodTag.getKeywords().get(0));
+    assertEquals("Saintsburry", foodTag.getKeywords().get(0).getKeyword());
     assertEquals(3,foodTag.getKeywords().size());
   }
 }

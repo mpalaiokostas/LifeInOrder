@@ -1,37 +1,37 @@
 package life.database.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.*;
+import java.util.List;
 
-/**
- * @author fragkakise on 12/04/2016.
- */
 @Entity
-@Table(name = "BANKTRANSACTIONTAG")
+@Table(name = "BANK_TRANSACTION_TAG")
 public class BankTransactionTag {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID")
-  private Long id;
+  @Column(name = "BANK_TRANSACTION_TAG_ID", insertable = false, updatable = false)
+  private Long bank_transaction_tag_id;
 
-  @Column(name = "TAGTITLE", nullable = false)
+  @Column(name = "TAG_TITLE", nullable = false)
   private String title;
 
-  @Column(name = "KEYWORDS", nullable = false)
-  private List<String> keywords;
+  @OneToMany(mappedBy = "banktransactiontag") //, orphanRemoval = true, cascade = CascadeType.ALL
+//  @JoinColumn(name = "BANK_TRANSACTION_TAG_KEYWORDS", nullable = false)
+  private List<BankTransactionTagKeywords> keywords;
+
+  @ManyToOne
+  @JoinColumn(name = "bank_transaction_id")
+  private BankTransaction bankTransaction;
 
   public BankTransactionTag(String title) {
     this.title = title;
-    keywords = new ArrayList<>();
   }
 
   public String getTitle() {
     return title;
   }
 
-  public List<String> getKeywords() {
+  public List<BankTransactionTagKeywords> getKeywords() {
     return keywords;
   }
 
@@ -40,12 +40,12 @@ public class BankTransactionTag {
     if(this == o) return true;
     if(o == null || getClass() != o.getClass()) return false;
     BankTransactionTag that = (BankTransactionTag)o;
-    return id.equals(that.id) && title.equals(that.title);
+    return bank_transaction_tag_id.equals(that.bank_transaction_tag_id) && title.equals(that.title);
   }
 
   @Override
   public int hashCode() {
-    int result = id.hashCode();
+    int result = bank_transaction_tag_id.hashCode();
     result = 31 * result + title.hashCode();
     return result;
   }
@@ -53,7 +53,7 @@ public class BankTransactionTag {
   @Override
   public String toString() {
     return "BankTransactionTag{" +
-             "id=" + id +
+             "bank_transaction_tag_id=" + bank_transaction_tag_id +
              ", title='" + title + '\'' +
              '}';
   }
@@ -62,7 +62,7 @@ public class BankTransactionTag {
     return keywords.size() > 0;
   }
 
-  public void setKeywords(String keyword) {
+  public void setKeywords(BankTransactionTagKeywords keyword) {
     this.keywords.add(keyword);
   }
 }

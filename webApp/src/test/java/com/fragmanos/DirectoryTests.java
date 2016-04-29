@@ -40,6 +40,6 @@ public class DirectoryTests {
 
   public String getTestPath() {
     String fs = File.separator;
-    return fs+"src"+fs+"test"+fs+"resources"+fs+"testTransactions"+fs;
+    return fs+"webApp"+fs+"src"+fs+"test"+fs+"resources"+fs+"testTransactions"+fs;
   }
 }
