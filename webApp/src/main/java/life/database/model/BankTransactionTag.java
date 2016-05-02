@@ -15,11 +15,10 @@ public class BankTransactionTag {
   @Column(name = "TAG_TITLE", nullable = false)
   private String title;
 
-  @OneToMany(mappedBy = "banktransactiontag") //, orphanRemoval = true, cascade = CascadeType.ALL
-//  @JoinColumn(name = "BANK_TRANSACTION_TAG_KEYWORDS", nullable = false)
+  @OneToMany(mappedBy = "bankTransactionTag", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<BankTransactionTagKeywords> keywords;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "bank_transaction_id")
   private BankTransaction bankTransaction;
 

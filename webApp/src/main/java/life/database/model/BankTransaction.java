@@ -25,9 +25,7 @@ public class BankTransaction implements Serializable {
   @Column(name = "COST", nullable = false)
   private Double cost;
 
-//  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-  @OneToMany //(mappedBy = "banktransaction")
-//  @JoinColumn(name = "BANK_TRANSACTION_TAG_ID", nullable = false)
+  @OneToMany(mappedBy = "bankTransaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<BankTransactionTag> tags;
 
   public LocalDate getTransactiondate() {
