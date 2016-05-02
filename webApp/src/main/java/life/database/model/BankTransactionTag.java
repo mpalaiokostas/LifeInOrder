@@ -1,6 +1,7 @@
 package life.database.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,7 @@ public class BankTransactionTag {
 
   public BankTransactionTag(String title) {
     this.title = title;
+    this.keywords = new ArrayList<>();
   }
 
   public String getTitle() {
