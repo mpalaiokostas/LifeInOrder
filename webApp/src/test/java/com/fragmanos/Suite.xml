@@ -2,7 +2,7 @@
 
 <suite name="TestAll">
 
-  <test name="Regression1">
+  <test name="BankInOrder">
     <packages>
       <package name="com.fragmanos" />
     </packages>
