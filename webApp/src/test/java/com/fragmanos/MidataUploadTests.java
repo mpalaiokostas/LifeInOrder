@@ -3,7 +3,6 @@ package com.fragmanos;
 import life.database.dao.BankTransactionDao;
 import life.database.dao.MonthStatDao;
 import life.file.CSVParser;
-import life.properties.PropertiesLoader;
 import life.web.controller.BankService;
 import life.web.controller.UploadController;
 import org.springframework.mock.web.MockMultipartFile;
@@ -47,14 +46,9 @@ public class MidataUploadTests {
 
         FileInputStream inputMidataFile = new FileInputStream(midataFile.getAbsoluteFile());
 
-        uploadController = new UploadController(new PropertiesLoader() {
-            @Override
-            public String getInputDirectory() {
-                return UPLOAD_TEST_DIR_NAME;
-            }
-        }, bankService);
-
+        uploadController = new UploadController();
         multipartMidataFile = new MockMultipartFile(midataFile.getName(), midataFile.getName(), "multipart/form-data", inputMidataFile);
+        uploadController.uploadTransactions(multipartMidataFile);
         inputMidataFile.close();
     }
 

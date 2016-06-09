@@ -4,8 +4,7 @@
     - initial.balance 
     > Its the initial balance that you had on your bank account on the first day. 
     > If there was no initial balance leave the number as it is zero.
-    - transactions.directory
-    > Set your own directory that will be used to save your bank transactions
+    
     - server.port
     > Set you preferred server port. 
     
