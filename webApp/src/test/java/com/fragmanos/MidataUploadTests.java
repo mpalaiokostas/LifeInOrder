@@ -46,7 +46,7 @@ public class MidataUploadTests {
 
         FileInputStream inputMidataFile = new FileInputStream(midataFile.getAbsoluteFile());
 
-        uploadController = new UploadController();
+
         multipartMidataFile = new MockMultipartFile(midataFile.getName(), midataFile.getName(), "multipart/form-data", inputMidataFile);
         uploadController.uploadTransactions(multipartMidataFile);
         inputMidataFile.close();
