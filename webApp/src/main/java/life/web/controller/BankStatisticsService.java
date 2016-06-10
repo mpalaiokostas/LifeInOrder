@@ -37,6 +37,8 @@ public class BankStatisticsService implements BankStatisticsInterface {
             totalIncome += (bankTransaction.getCost() > 0 ? bankTransaction.getCost() : 0);
         }
         return totalIncome;
+
+        // TODO new JDbCTemplate().query("select NAME, VALUE from account where value < 0? ASdasd??Asd asdkhbnac> IO.acs", MyObject.class);
     }
 
     @Override

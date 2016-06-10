@@ -1,18 +1,12 @@
 package life.database.dao;
 
+import life.database.model.BankTransaction;
+
 import java.util.List;
 
-import life.database.model.BankTransaction;
-import org.joda.time.LocalDate;
-import org.springframework.data.repository.CrudRepository;
-
-/**
- * @author fragkakise on 22/09/2015.
- */
-public interface BankTransactionDao extends CrudRepository<BankTransaction, Long> {
+public interface BankTransactionDao{
 
   List<BankTransaction> findAllByOrderByTransactiondateDesc();
 
-  List<BankTransaction> findByTransactiondateAndDescriptionAndCost(LocalDate localDate, String description, Double cost);
-
+  void save(String result);
 }

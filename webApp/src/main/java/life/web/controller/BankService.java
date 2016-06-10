@@ -1,32 +1,24 @@
 package life.web.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Named;
-
 import life.database.dao.BankTransactionDao;
 import life.database.dao.MonthStatDao;
 import life.database.model.BankTransaction;
 import life.database.model.MonthStat;
-import life.directory.DirectoryReader;
-import life.properties.PropertiesLoader;
 import life.util.BankTransactionUtil;
 import org.joda.time.YearMonth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.inject.Named;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 @Named
 public class BankService implements BankInterface {
 
   private static final Logger log = LoggerFactory.getLogger(BankService.class);
-
-  @Autowired
-  private PropertiesLoader propertiesLoader;
 
   private MonthStatDao monthStatDao;
   private BankTransactionDao bankTransactionDao;
@@ -48,19 +40,19 @@ public class BankService implements BankInterface {
     return bankTransactionUtil.getTableObjectList(allBankTransactions);
   }
 
-  @Override
-  public void populateDatabase() {
-    DirectoryReader directoryReader = new DirectoryReader();
-    BankTransactionUtil bankTransactionUtil = new BankTransactionUtil();
-
-    if(!directoryReader.isDirectoryEmpty(getInputDirectory())) {
-      List<BankTransaction> bankTransactionsFromDirectory = getBankTransactionsFromDirectory(bankTransactionUtil);
-      for(BankTransaction bankTransaction : bankTransactionsFromDirectory) {
-        bankTransactionDao.save(bankTransaction);
-        setMonthStat(bankTransaction);
-      }
-    }
-  }
+//  @Override
+//  public void populateDatabase() {
+//    DirectoryReader directoryReader = new DirectoryReader();
+//    BankTransactionUtil bankTransactionUtil = new BankTransactionUtil();
+//
+//    if(!directoryReader.isDirectoryEmpty(getInputDirectory())) {
+//      List<BankTransaction> bankTransactionsFromDirectory = getBankTransactionsFromDirectory(bankTransactionUtil);
+//      for(BankTransaction bankTransaction : bankTransactionsFromDirectory) {
+//        bankTransactionDao.save(bankTransaction);
+//        setMonthStat(bankTransaction);
+//      }
+//    }
+//  }
 
   @Override
   public List<TableObject> getMonthlyExpensesList(int monthNumber, int yearNumber) {
@@ -88,41 +80,25 @@ public class BankService implements BankInterface {
     return bankTransactionUtil.getTableObjectList(bankTransactionList);
   }
 
-  @Override
-  public void populateDatabase(List<BankTransaction> bankTransactionList) {
-    for(BankTransaction bankTransaction : bankTransactionList) {
-      if(!bankTransactionDao.findByTransactiondateAndDescriptionAndCost(
-        bankTransaction.getTransactiondate(),
-        bankTransaction.getDescription(),
-        bankTransaction.getCost()
-      ).equals(bankTransaction)) {
-        bankTransactionDao.save(bankTransaction);
-      } else {
-        log.info("Bank transaction existed in database: " + bankTransaction.toString());
-      }
-      setMonthStat(bankTransaction);
-    }
-  }
+//  @Override
+//  public void populateDatabase(List<BankTransaction> bankTransactionList) {
+//    for(BankTransaction bankTransaction : bankTransactionList) {
+//      if(!bankTransactionDao.findByTransactiondateAndDescriptionAndCost(
+//        bankTransaction.getTransactiondate(),
+//        bankTransaction.getDescription(),
+//        bankTransaction.getCost()
+//      ).equals(bankTransaction)) {
+//        bankTransactionDao.save(bankTransaction);
+//      } else {
+//        log.info("Bank transaction existed in database: " + bankTransaction.toString());
+//      }
+//      setMonthStat(bankTransaction);
+//    }
+//  }
 
   @Override
   public List<BankTransaction> getDbBankTransactions() {
     return bankTransactionDao.findAllByOrderByTransactiondateDesc();
-  }
-
-  private String getInputDirectory() {
-    return propertiesLoader.getInputDirectory() + File.separator;
-  }
-
-  private List<BankTransaction> getBankTransactionsFromDirectory(BankTransactionUtil bankTransactionUtil) {
-    List<BankTransaction> bankTransactionsFromDirectory = new ArrayList<BankTransaction>();
-    try {
-      bankTransactionsFromDirectory = bankTransactionUtil.getBankTransactionsFromDirectory(getInputDirectory());
-    } catch(ParseException e) {
-      log.error("ParseException while parsing directory", e);
-    } catch(IOException e) {
-      log.error("IO exception while parsing directory", e);
-    }
-    return bankTransactionsFromDirectory;
   }
 
   public void setMonthStat(BankTransaction bankTransaction) {
