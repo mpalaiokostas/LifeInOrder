@@ -62,3 +62,75 @@ the structure must be something like the following
   1150 Mon Mar 28 21:30:22 BST 2016 icons/favicon.ico
   4124 Wed May 04 23:34:52 BST 2016 index.jsp
 ```
+TESTS
+
+15 MB
+==================
+
+InputStream inputStream = new BufferedInputStream(statement.getInputStream());
+Parse file small-statement.csvElapsed 2037 ms
+
+InputStream inputStream = statement.getInputStream();
+Parse file small-statement.csvElapsed 1889 ms
+
+TRY-WITH-RESOURCES and BufferedReader
+Parse file small-statement.csvElapsed 1345 ms
+
+TRY-WITH-RESOURCES and Scanner
+Parse file small-statement.csvElapsed 3475 ms
+
+
+150 MB
+==================
+InputStream inputStream = new BufferedInputStream(statement.getInputStream());
+Parse file big-statement.csvElapsed 32582 ms
+
+InputStream inputStream = statement.getInputStream();
+Parse file big-statement.csvElapsed 29624 ms
+
+TRY-WITH-RESOURCES and BufferedReader
+Parse file big-statement.csvElapsed 27576 ms
+
+TRY-WITH-RESOURCES and Scanner
+Parse file big-statement.csvElapsed 44177 ms
+
+
+# TRY-WITH-RESOURCES and BufferedReader #
+
+```
+    try (  
+        InputStream inputStream = statement.getInputStream();  
+        InputStreamReader in = new InputStreamReader(inputStream);  
+        final BufferedReader bufferedReader = new BufferedReader(in);  
+    ) {  
+      String csvLine;  
+      while ((csvLine = bufferedReader.readLine()) != null) {  
+        bankTransactions.add(new BankTransaction(  
+            getDate(csvLine),  
+            getDescription(csvLine),  
+            getCost(csvLine)  
+        ));  
+      }  
+      inputStream.close();  
+      in.close();  
+      bufferedReader.close();  
+    }  
+```
+
+# TRY-WITH-RESOURCES and Scanner #
+
+```
+    try (  
+        Scanner scanner = new Scanner(statement.getInputStream());  
+    ) {  
+      String csvLine;  
+      while (scanner.hasNextLine()) {  
+        String line = scanner.nextLine();  
+        bankTransactions.add(new BankTransaction(  
+            getDate(line),  
+            getDescription(line),  
+            getCost(line)  
+        ));  
+      }  
+    }  
+```
