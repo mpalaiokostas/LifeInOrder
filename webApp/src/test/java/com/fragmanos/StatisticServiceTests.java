@@ -36,7 +36,7 @@ public class StatisticServiceTests {
     bankTransactionList = new ArrayList<BankTransaction>();
     monthStaList = new ArrayList<MonthStat>();
 
-    when(bankTransactionDaoMock.findAllByOrderByTransactiondateDesc()).thenReturn(bankTransactionList);
+    when(bankTransactionDaoMock.getAllTransactions()).thenReturn(bankTransactionList);
     when(monthStatDaoMock.findAllByOrderByYearMonthDesc()).thenReturn(monthStaList);
     when(monthStatDaoMock.findAll()).thenReturn(monthStaList);
   }

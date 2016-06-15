@@ -32,7 +32,7 @@ public class BankServiceTests {
     month=10;
     year=2015;
     bankTransactionList = new ArrayList<BankTransaction>();
-    when(bankTransactionDaoMock.findAllByOrderByTransactiondateDesc()).thenReturn(bankTransactionList);
+    when(bankTransactionDaoMock.getAllTransactions()).thenReturn(bankTransactionList);
   }
 
   @Test
