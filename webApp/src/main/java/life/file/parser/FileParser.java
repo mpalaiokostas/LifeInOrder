@@ -1,9 +1,12 @@
 package life.file.parser;
 
-import java.util.List;
+import java.io.IOException;
+import java.text.ParseException;
 
 public interface FileParser<I, O> {
 
-  List<O> parse(I i);
+  boolean canParse(I i) throws IOException;
+
+  O parse(I i) throws IOException, ParseException;
 
 }
