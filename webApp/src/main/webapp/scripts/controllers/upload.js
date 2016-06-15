@@ -49,7 +49,7 @@ app.controller('UploadCtrl', function ($scope, FileUploader, $location) {
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');
-    $location.path('/Statistics')
+    $location.path('/Transactions')
   };
 
   console.info('uploader', uploader);
