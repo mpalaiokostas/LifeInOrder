@@ -1,71 +1,49 @@
 package life.database.manager;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DBConnectionManager {
 
-  @Value("${db.name}")
-  private final String dbms;
-  @Value("${db.server}")
-  private final String server;
-  @Value("${db.port}")
-  private final String port;
-  @Value("${db.user}")
+  @Value("${jdbc.driver}")
+  private final String driver;
+  @Value("${jdbc.url}")
+  private final String url;
+  @Value("${jdbc.user}")
   private final String user;
-  @Value("${db.pass}")
+  @Value("${jdbc.pass}")
   private final String pass;
 
+  private Connection conn;
+
   public DBConnectionManager() {
-    dbms = null;
-    server = null;
-    port = null;
+    driver = null;
+    url = null;
     user = null;
     pass = null;
   }
 
-  public DBConnectionManager(String dbms, String server, String port, String user, String pass) {
-    this.dbms = dbms;
-    this.server = server;
-    this.port = port;
-    this.user = user;
-    this.pass = pass;
-  }
-
-  public Connection getConnection() {
-    Connection conn = null;
-    Properties connectionProps = new Properties();
-    connectionProps.put("user", user);
-    connectionProps.put("password", pass);
-
+  public Connection getConnection(){
     try {
-      if (dbms.equals("mysql")) {
-        conn = DriverManager.getConnection("jdbc:" + dbms + "://" + server + ":" + port + "/", connectionProps);
-      } else if (dbms.equals("derby")) {
-        conn = DriverManager.getConnection("jdbc:" + dbms + ":" + dbms + ";create=true", connectionProps);
-      }
-    } catch (SQLException e) {
+    Class.forName(driver);
+      conn = DriverManager.getConnection(url, user, pass);
+    } catch(SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }
     return conn;
   }
 
-  public String getDbms() {
-    return dbms;
+  public String getDriver() {
+    return driver;
   }
 
-  public String getServer() {
-    return server;
-  }
-
-  public String getPort() {
-    return port;
+  public String getUrl() {
+    return url;
   }
 
   public String getUser() {

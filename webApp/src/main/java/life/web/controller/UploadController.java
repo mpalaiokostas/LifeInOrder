@@ -18,8 +18,9 @@ public class UploadController {
   private BankingFacade bankingFacade;
 
   @Autowired
-  public UploadController(FileParser fileParser) {
+  public UploadController(FileParser fileParser, BankingFacade bankingFacade) {
     this.fileParser = fileParser;
+    this.bankingFacade = bankingFacade;
   }
 
   @RequestMapping(value = "transactions", method = RequestMethod.POST)

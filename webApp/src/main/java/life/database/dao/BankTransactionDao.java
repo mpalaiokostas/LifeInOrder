@@ -1,8 +1,8 @@
 package life.database.dao;
 
-import life.database.model.BankTransaction;
-
 import java.util.List;
+
+import life.database.model.BankTransaction;
 
 public interface BankTransactionDao{
 

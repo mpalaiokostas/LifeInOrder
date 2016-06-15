@@ -1,17 +1,15 @@
 package life.database.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import life.database.dao.BankTransactionDao;
 import life.database.manager.DBConnectionManager;
 import life.database.model.BankTransaction;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
 
 @Named
 public class BankTransactionController implements BankTransactionDao {
@@ -32,20 +30,21 @@ public class BankTransactionController implements BankTransactionDao {
 
   @Override
   public void save(List<BankTransaction> bankTransactions) {
-    PreparedStatement statement = null;
     try {
-      for (BankTransaction bankTransaction : bankTransactions) {
-        statement = connection.prepareStatement(
-            "insert into BANKTRANSACTION (TRANSACTIONDATE, DESCRIPTION, COST) " + "VALUES (?, ?, ?)"
-        );
-        statement.setDate(1, (Date) bankTransaction.getTransactiondate().toDate());
+      connection.setAutoCommit(false);
+      PreparedStatement statement = connection.prepareStatement(
+        "insert into BANKTRANSACTION (TRANSACTIONDATE, DESCRIPTION, COST) " + "VALUES (?, ?, ?)"
+      );
+      for(BankTransaction bankTransaction : bankTransactions) {
+        statement.setDate(1, new java.sql.Date(bankTransaction.getTransactiondate().toDateTimeAtStartOfDay().getMillis()));
         statement.setString(2, bankTransaction.getDescription());
         statement.setDouble(3, bankTransaction.getCost());
         statement.executeUpdate();
+        connection.commit();
       }
-    } catch (SQLException e) {
+    } catch(SQLException e) {
       e.printStackTrace();
     }
-    //TODO new JDbCTemplate().query("select NAME, VALUE from account where value < 0? ASdasd??Asd asdkhbnac> IO.acs", MyObject.class);
   }
+
 }
