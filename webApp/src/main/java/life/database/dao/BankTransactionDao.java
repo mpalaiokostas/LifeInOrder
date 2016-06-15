@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BankTransactionDao{
 
-  List<BankTransaction> findAllByOrderByTransactiondateDesc();
+  List<BankTransaction> getAllTransactions();
 
-  void save(String result);
+  void save(List<BankTransaction> result);
 }

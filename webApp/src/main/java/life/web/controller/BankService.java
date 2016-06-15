@@ -36,7 +36,7 @@ public class BankService implements BankInterface {
 
   @Override
   public List<TableObject> getTableObjects() {
-    List<BankTransaction> allBankTransactions = bankTransactionDao.findAllByOrderByTransactiondateDesc();
+    List<BankTransaction> allBankTransactions = bankTransactionDao.getAllTransactions();
     return bankTransactionUtil.getTableObjectList(allBankTransactions);
   }
 
@@ -57,7 +57,7 @@ public class BankService implements BankInterface {
   @Override
   public List<TableObject> getMonthlyExpensesList(int monthNumber, int yearNumber) {
     List<BankTransaction> bankTransactionList = new ArrayList<BankTransaction>();
-    for (BankTransaction bankTransaction : bankTransactionDao.findAllByOrderByTransactiondateDesc()) {
+    for (BankTransaction bankTransaction : bankTransactionDao.getAllTransactions()) {
       if ((bankTransaction.getTransactiondate().getMonthOfYear() == monthNumber) &&
             (bankTransaction.getTransactiondate().getYear() == yearNumber) &&
               (bankTransaction.getCost() < 0)) {
@@ -70,7 +70,7 @@ public class BankService implements BankInterface {
   @Override
   public List<TableObject> getMonthlyIncomeList(int monthNumber, int yearNumber) {
     List<BankTransaction> bankTransactionList = new ArrayList<BankTransaction>();
-    for (BankTransaction bankTransaction : bankTransactionDao.findAllByOrderByTransactiondateDesc()) {
+    for (BankTransaction bankTransaction : bankTransactionDao.getAllTransactions()) {
       if ((bankTransaction.getTransactiondate().getMonthOfYear() == monthNumber) &&
               (bankTransaction.getTransactiondate().getYear() == yearNumber) &&
               (bankTransaction.getCost() > 0)) {
@@ -98,7 +98,7 @@ public class BankService implements BankInterface {
 
   @Override
   public List<BankTransaction> getDbBankTransactions() {
-    return bankTransactionDao.findAllByOrderByTransactiondateDesc();
+    return bankTransactionDao.getAllTransactions();
   }
 
   public void setMonthStat(BankTransaction bankTransaction) {
@@ -116,17 +116,17 @@ public class BankService implements BankInterface {
     profit = income + expense;
 
     if(monthStatDao.findAll().isEmpty()) {
-      monthStatDao.save(new MonthStat(yearMonth, income, expense, profit));
+//      monthStatDao.save(new MonthStat(yearMonth, income, expense, profit));
     } else {
       MonthStat monthStatForUpdate = monthStatDao.findByYearMonth(yearMonth);
       if(monthStatForUpdate == null){
-        monthStatDao.save(new MonthStat(yearMonth, income, expense, profit));
+//        monthStatDao.save(new MonthStat(yearMonth, income, expense, profit));
       } else {
         // TODO increase the accuracy of the below calculations, avoid double -> string -> double
         monthStatForUpdate.setIncome(Double.parseDouble(decimalFormat.format(income + monthStatForUpdate.getIncome())));
         monthStatForUpdate.setExpense(Double.parseDouble(decimalFormat.format(expense + monthStatForUpdate.getExpense())));
         monthStatForUpdate.setProfit(Double.parseDouble(decimalFormat.format(profit + monthStatForUpdate.getProfit())));
-        monthStatDao.save(monthStatForUpdate);
+//        monthStatDao.save(monthStatForUpdate);
       }
     }
   }
